@@ -1,31 +1,341 @@
-html, body {
+:root {
+  /* Brand palette */
+  --vacuum-navy: #171A2E;
+  --deep-orbital-navy: #272B49;
+  --structural-indigo: #3A4168;
+  --stellar-white: #F3F2EE;
+  --mist-grey: #B7BED3;
+  --orbital-blue: #4A6EDB;
+  --instrument-amber: #D7A646;
+
+  /* Page tokens derived from brand palette */
+  --bg: #06070b;
+  --bg-top: var(--vacuum-navy);
+  --bg-mid: #0d1220;
+  --bg-bottom: #07090f;
+
+  --panel: rgba(23, 26, 46, 0.34);
+  --panel-border: rgba(183, 190, 211, 0.12);
+
+  --text: var(--stellar-white);
+  --muted: rgba(183, 190, 211, 0.82);
+  --quiet: rgba(183, 190, 211, 0.52);
+
+  /* restrained accent, not flashy */
+  --accent: #8fa3d6;
+  --accent-soft: rgba(58, 65, 104, 0.26);
+
+  --grid: rgba(183, 190, 211, 0.045);
+  --shadow: 0 30px 80px rgba(0, 0, 0, 0.42);
+  --max-width: 1240px;
+
+  /* Link styling: default restrained */
+  --link-color: #c6cede;
+  --link-hover: var(--stellar-white);
+
+  /*
+  Optional slightly more blue-toned link:
+  Uncomment these if you want a faint orbital-blue influence
+  without making it feel like a CTA.
+
+  --link-color: #9fb2e3;
+  --link-hover: #d9e2f7;
+  */
+
+  /*
+  Optional stronger accent mode:
+  Keep commented unless you want more contrast.
+
+  --accent: var(--orbital-blue);
+  --link-color: var(--orbital-blue);
+  --link-hover: #6f8ef0;
+  */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
   margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  background: #272b49;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at top left, rgba(58, 65, 104, 0.30), transparent 34%),
+    radial-gradient(circle at 85% 18%, rgba(183, 190, 211, 0.06), transparent 20%),
+    linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 44%, var(--bg-bottom) 100%);
+  color: var(--text);
 }
 
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.page-shell {
+  position: relative;
+  min-height: 100vh;
   overflow: hidden;
-  font-family: Arial, sans-serif;
+  isolation: isolate;
+}
+
+.page-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at center, black 28%, transparent 88%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.grid-orbit {
+  position: absolute;
+  border: 1px solid rgba(183, 190, 211, 0.08);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.grid-orbit-a {
+  top: 8%;
+  right: -10%;
+  width: min(54vw, 760px);
+  height: min(54vw, 760px);
+}
+
+.grid-orbit-b {
+  bottom: -16%;
+  left: -8%;
+  width: min(42vw, 560px);
+  height: min(42vw, 560px);
+}
+
+.site-layout {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  width: min(100%, var(--max-width));
+  margin: 0 auto;
+  padding: 40px 28px 28px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 24px;
+}
+
+
+.logo {
+  width: clamp(180px, 18vw, 270px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.28));
 }
 
 .hero {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  align-content: center;
+  gap: 38px;
+  min-height: 0;
 }
 
-.logo {
-  max-width: min(42vw, 420px);
-  max-height: 42vh;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+.masthead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 24px;
+}
+
+.eyebrow,
+.kicker {
+  margin: 0;
+  text-transform: uppercase;
+  
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  font-weight: 500;
+}
+
+
+.eyebrow {
+  color: var(--accent);
+  margin-bottom: 0px; /* space below eyebrow */
+}
+
+.hero-copy {
+  width: min(100%, 860px);
+}
+
+.kicker {
+  color: var(--accent);
+  margin-bottom: 18px;
+} 
+
+
+h1 {
+  margin: 0;
+  max-width: 11.5ch;
+  font-size: clamp(3rem, 7vw, 6.1rem);
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.summary {
+  margin: 26px 0 0;
+  max-width: 64ch;
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  line-height: 1.74;
+  color: var(--muted);
+}
+
+.summary strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration-color: rgba(198, 206, 222, 0.30);
+  text-underline-offset: 0.14em;
+  transition: color 180ms ease, text-decoration-color 180ms ease;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--link-hover);
+  text-decoration-color: currentColor;
+}
+
+.site-footer {
+  padding-top: 8px;
+}
+
+.footer-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(183, 190, 211, 0),
+    rgba(183, 190, 211, 0.14),
+    rgba(183, 190, 211, 0)
+  );
+  margin-bottom: 18px;
+}
+
+.footer-content {
+  display: grid;
+  gap: 6px;
+  padding-bottom: 8px;
+  max-width: 880px;
+}
+
+.footer-text {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.68;
+  color: var(--muted);
+}
+
+.footer-meta {
+  margin: 6px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--quiet);
+}
+
+.footer-heading {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 500;
+  color: var(--quiet);
+}
+
+
+@media (max-width: 900px) {
+  .site-layout {
+    grid-template-rows: auto auto;
+    padding-top: 28px;
+    gap: 22px;
+  }
+
+  .hero {
+    align-content: start;
+    gap: 30px;
+  }
+
+  h1 {
+    max-width: 12ch;
+  }
+}
+
+@media (max-width: 720px) {
+  .site-layout {
+    padding: 24px 20px 20px;
+    gap: 18px;
+  }
+
+  .masthead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .eyebrow {
+    white-space: normal;
+  }
+
+  .hero {
+    gap: 24px;
+  }
+
+  .hero-copy {
+    width: 100%;
+  }
+
+  h1 {
+    max-width: none;
+    font-size: clamp(2.4rem, 12vw, 4.4rem);
+    line-height: 0.98;
+  }
+
+  .summary {
+    max-width: none;
+    font-size: 1rem;
+    line-height: 1.68;
+  }
+
+  .page-shell::before {
+    background-size: 56px 56px;
+  }
+
+  .grid-orbit-a {
+    top: 6%;
+    right: -34%;
+    width: 90vw;
+    height: 90vw;
+  }
+
+  .grid-orbit-b {
+    bottom: -10%;
+    left: -28%;
+    width: 70vw;
+    height: 70vw;
+  }
+
+  .footer-text,
+  .footer-meta {
+    font-size: 0.88rem;
+  }
 }
